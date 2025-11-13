@@ -4,6 +4,7 @@ import sectionRouter from "./routes/section.js"
 import subjectRouter from "./routes/subject.js"
 import courseRouter from "./routes/course.js"
 import levelRouter from "./routes/level.js"
+import scheduleTypeRouter from "./routes/scheduleType.js"
 
 const app = express();
 app.use(cors());
@@ -16,6 +17,7 @@ app.use('/sections', sectionRouter);
 app.use('/subjects', subjectRouter);
 app.use('/courses', courseRouter);
 app.use('/levels', levelRouter);
+app.use('/scheduleType', scheduleTypeRouter)
 
 
 
