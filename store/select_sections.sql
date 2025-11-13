@@ -10,5 +10,8 @@ JOIN section
 ON section.subjectid = course.subjectid
 JOIN term
 ON term.id = section.termid
-LIMIT 1;
+JOIN scheduletype 
+ON section.scheduletypeid = scheduletype.id
+WHERE subject.id = ? section.in AND course.num = ? AND
+section.scheduletypeid = ? AND section.start = ? AND section.end = ? AND DAYS = 
 

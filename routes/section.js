@@ -14,7 +14,7 @@ router.post('/', (req, resp) => {
             resp.status(404).json({error: "could not find subject"})
         }
 
-        db.all("select , description from session", [], (err, rows) => {
+        db.all("select , description from sesion", [], (err, rows) => {
             if (err) {
                 return res.status(500).json({error: err.message});
             }

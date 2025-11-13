@@ -1,0 +1,1 @@
+curl http://localhost:8080/subjects/?subjectName=Computer%20Science
