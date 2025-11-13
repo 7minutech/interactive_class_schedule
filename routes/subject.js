@@ -13,7 +13,7 @@ router.get('/', (req, resp) => {
         if (!row){
            resp.status(404).json({error: "subject not found"})
         }
-        resp.status(200).json({id: row.id, name: row.name})
+        resp.status(200).json(row)
     });
 });
 

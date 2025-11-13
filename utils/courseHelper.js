@@ -1,7 +1,7 @@
 import { db } from "../store/db.js"
 
 export function fetchCourseBySubjectID(subjectID, callback) {
-    db.get(`SELECT * FROM subject where subjectid = ?`, [subjectID], (err, row) => {
+    db.get(`SELECT * FROM subject where num = ?`, [subjectName], (err, row) => {
         if (err) {
             callback(err, null)
         }   
