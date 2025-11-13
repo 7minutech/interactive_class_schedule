@@ -8,23 +8,15 @@ router.get('/', (req, resp) => {
 
     if (!courseNum) {
         db.all(`SELECT * FROM course`, [], (err, rows) => {
-            if (err) {
-                resp.status(500).json({error: "database had error finding courses"})
-            }   
-            if (!rows){
-            resp.status(404).json({error: "courses not found"})
-            }
+            if (err) return resp.status(500).json({error: "database had error finding courses"})  
+            if (!rows) return resp.status(404).json({error: "courses not found"})
             resp.status(200).json(rows)
         });
     }
     else {
         db.all(`SELECT * FROM course where num = ?`, [courseNum], (err, rows) => {
-            if (err) {
-                resp.status(500).json({error: "database had error finding courses"})
-            }   
-            if (!rows){
-            resp.status(404).json({error: "courses not found"})
-            }
+            if (err) return resp.status(500).json({error: "database had error finding courses"}) 
+            if (!rows) return resp.status(404).json({error: "courses not found"})
             resp.status(200).json(rows)
         });
     }
