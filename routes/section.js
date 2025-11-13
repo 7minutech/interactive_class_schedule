@@ -13,16 +13,16 @@ router.get('/', (req, resp) => {
         });
     } 
     else if (days) {
-        parsedDays = dayList(days)
+        let parsedDays = dayList(days)
 
-        const conditions = parsedDays.map(() => `days LIKE ?`).join(" OR ");
-        const params = parsedDays.map(day => `%${day}%`);
+        let conditions = parsedDays.map(() => `days LIKE ?`).join(" OR ");
+        let params = parsedDays.map(day => `%${day}%`);
 
-        const sql = `SELECT * FROM section WHERE ${conditions}`;
+        let sql = `SELECT * FROM section WHERE ${conditions}`;
 
         db.all(sql, params, (err, rows) => {
             if (err) return res.status(500).json({ error: "Database error" });
-            res.status(200).json(rows);
+            resp.status(200).json(rows);
         });
     }
     else {
