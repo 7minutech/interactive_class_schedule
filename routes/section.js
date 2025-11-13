@@ -26,9 +26,9 @@ router.get('/', (req, resp) => {
         });
     }
     else {
-        db.all(`SELECT * FROM section`, [level], (err, rows) => {
-            if (err) return resp.status(500).json({ error: "database had error finding level" });
-            if (!rows) return resp.status(404).json({ error: "level not found" });
+        db.all(`SELECT * FROM section`, [], (err, rows) => {
+            if (err) return resp.status(500).json({ error: "database had error finding section" });
+            if (!rows) return resp.status(404).json({ error: "section not found" });
             resp.status(200).json(rows);
         });
     }
