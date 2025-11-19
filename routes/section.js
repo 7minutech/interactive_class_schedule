@@ -5,7 +5,31 @@ import { dayList } from '../utils/daysHelper.js';
 
 router.get('/', (req, resp) => {
     const { start, end, days } = req.query; 
-    if (start && end) {
+
+    if (start && end && days) {
+
+        let params = []
+
+        let timeParams = [start, end]
+
+        params.push(...timeParams)
+
+        let parsedDays = dayList(days)
+
+        let conditions = parsedDays.map(() => `days LIKE ?`).join(" OR ");
+        let dayParams = parsedDays.map(day => `%${day}%`);
+
+        let sql = `SELECT * FROM section WHERE start = ? AND end = ? AND (${conditions})`
+
+        params.push(...dayParams)
+
+        db.all(sql, params, (err, rows) => {
+            if (err) return resp.status(500).json({ error: "database had error finding sections" });
+            if (!rows || rows.length === 0) return resp.status(404).json({ error: "sections not found" });
+            resp.status(200).json(rows);
+        });
+    }
+    else if (start && end) {
         db.all(`SELECT * FROM section where start = ? AND end = ?`, [start, end], (err, rows) => {
             if (err) return resp.status(500).json({ error: "database had error finding sections" });
             if (!rows || rows.length === 0) return resp.status(404).json({ error: "sections not found" });
