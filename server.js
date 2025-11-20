@@ -6,6 +6,8 @@ import courseRouter from "./routes/course.js"
 import levelRouter from "./routes/level.js"
 import scheduleTypeRouter from "./routes/scheduleType.js"
 import resultRouter from "./routes/result.js"
+import termRouter from "./routes/term.js"
+
 
 const app = express();
 app.use(cors());
@@ -20,6 +22,7 @@ app.use('/courses', courseRouter);
 app.use('/levels', levelRouter);
 app.use('/scheduleType', scheduleTypeRouter)
 app.use('/results', resultRouter);
+app.use('/terms', termRouter);
 
 
 
