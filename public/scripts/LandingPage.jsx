@@ -34,12 +34,13 @@ class LandingPage extends React.Component {
     };
 
     onSubmit = (event) => {
-        event.preventDefault();
-        const { selectedTerm } = this.state;
-        if (selectedTerm) {
-        window.location.href = `/search.html`; 
-        }
-    };
+    
+    const { selectedTerm } = this.state;
+    if (selectedTerm) {
+        window.location.href = `/search?term=${selectedTerm}`;
+    }
+};
+
 
     render() {
         const { terms, loading, selectedTerm } = this.state;
@@ -53,7 +54,7 @@ class LandingPage extends React.Component {
         }
 
         return (
-            <form onSubmit={this.onSubmit}>
+            <div>
                 <select value={selectedTerm} onChange={this.onChange}>
                 <option value="" disabled>
                     Select a term
@@ -64,8 +65,9 @@ class LandingPage extends React.Component {
                     </option>
                 ))}
                 </select>
-                <button type="submit">Go</button>
-            </form>
+                <button type="submit" onClick={this.onSubmit}>Go</button>
+            </div>
+
         );
     }
 }
