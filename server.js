@@ -30,7 +30,7 @@ app.use('/sections', sectionRouter);
 app.use('/subjects', subjectRouter);
 app.use('/courses', courseRouter);
 app.use('/levels', levelRouter);
-app.use('/scheduleType', scheduleTypeRouter)
+app.use('/scheduleTypes', scheduleTypeRouter)
 app.use('/results', resultRouter);
 app.use('/terms', termRouter);
 
