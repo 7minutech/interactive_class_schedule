@@ -77,44 +77,54 @@ class SearchPage extends React.Component {
         }
 
         return (
-            <div>
-                <select value={selectedSubject} onChange={this.onSubjectChange}>
-                <option value="" disabled>
-                    Select a Subject
-                </option>
-                {subjects.map((subject) => (
-                    <option value={subject.id}>
-                    {subject.name}
-                    </option>
-                ))}
-                </select>
+            <div className="container">
+                <div className="input_container">
+                    <label>Subject: </label>
+                    <select value={selectedSubject} onChange={this.onSubjectChange} size={5}>
+                        <option value="" disabled>
+                            Select a Subject
+                        </option>
+                        {subjects.map((subject) => (
+                            <option value={subject.id}>
+                            {subject.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div className="input_container">
+                    <label htmlFor="courseNumber">Course Number: </label>
+                    <input id="couresNumber" type="number" value={selectedCourseNumber} onChange={this.onCourseNumberChange} />
+                </div>
+                <div className="input_container">
+                    <label>Schedule Type: </label>
+                    <select value={selectedScheduleType} onChange={this.onScheduleTypeChange} size={5}>
+                        <option value="" disabled>
+                            Select a ScheduleType
+                        </option>
+                        {scheduleTypes.map((ScheduleType) => (
+                            <option value={ScheduleType.id}>
+                            {ScheduleType.description}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div className="input_container">
+                    <label>Course Level: </label>
+                    <select value={selectedCourseLevel} onChange={this.onCourseLevelChange} size={3}>
+                        <option value="" disabled>
+                            Select a Course Level
+                        </option>
+                        {courseLevels.map((level) => (
+                            <option value={level.id}>
+                            {level.description}
+                            </option>
+                        ))}
+                    </select>
 
-                <label htmlFor="courseNumber">Course Number: </label>
-                <input id="couresNumber" type="number" value={selectedCourseNumber} onChange={this.onCourseNumberChange} />
-
-                <select value={selectedScheduleType} onChange={this.onScheduleTypeChange}>
-                <option value="" disabled>
-                    Select a ScheduleType
-                </option>
-                {scheduleTypes.map((ScheduleType) => (
-                    <option value={ScheduleType.id}>
-                    {ScheduleType.description}
-                    </option>
-                ))}
-                </select>
-
-                <select value={selectedCourseLevel} onChange={this.onCourseLevelChange}>
-                <option value="" disabled>
-                    Select a Course Level
-                </option>
-                {courseLevels.map((level) => (
-                    <option value={level.id}>
-                    {level.description}
-                    </option>
-                ))}
-                </select>
-
-                <button type="submit" >Search</button>
+                </div>
+                <div>
+                    <button type="submit" >Search</button>
+                </div>
             </div>
 
         );
