@@ -55,8 +55,8 @@ class SearchPage extends React.Component {
         this.setState({ selectedCourseLevel: event.target.value });
     };
 
-     onCourseNumberChange = (event) => {
-        this.setState({ selectedCourseLevel: event.target.value });
+    onCourseNumberChange = (event) => {
+        this.setState({ selectedCourseNumber: event.target.value });
     };
 
     render() {
