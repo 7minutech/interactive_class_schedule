@@ -99,36 +99,53 @@ class SearchPage extends React.Component {
     };
 
     onStartTimeHourChange = (event) => {
-        let hour24 = this.to24Hour(event.target.value, this.state.selectedStartTimePeriod)
-        this.setState({ selectedStartTime:  hour24 +  ":" + this.state.selectedStartTime.substring(3) });
-    }
+        const hour24 = this.to24Hour(event.target.value, this.state.selectedStartTimePeriod);
+        const newTime = hour24 + ":" + this.state.selectedStartTime.substring(3);
+        console.log(`[Start Hour Change] New hour24: ${hour24}, newTime: ${newTime}`);
+        this.setState({ selectedStartTime: newTime });
+    };
 
     onStartTimeMinuteChange = (event) => {
-        this.setState({ selectedStartTime:  this.state.selectedStartTime.substring(0, 2) + ":" + event.target.value});
-    }
-    
+        const newTime = this.state.selectedStartTime.substring(0, 2) + ":" + event.target.value;
+        console.log(`[Start Minute Change] New minute: ${event.target.value}, newTime: ${newTime}`);
+        this.setState({ selectedStartTime: newTime });
+    };
+
     onStartTimePeriodChange = (event) => {
-        let startTimeHour = this.state.selectedStartTime.substring(0,2)
-        let hour24 = this.to24Hour(startTimeHour, event.target.value)
-        this.setState({ selectedStartTime:  hour24 +  ":" + this.state.selectedStartTime.substring(3) });
-        this.setState({ selectedStartTimePeriod: event.target.value });
-    }
+        const startTimeHour = this.state.selectedStartTime.substring(0, 2);
+        const hour24 = this.to24Hour(startTimeHour, event.target.value);
+        const newTime = hour24 + ":" + this.state.selectedStartTime.substring(3);
+        console.log(`[Start Period Change] New period: ${event.target.value}, hour24: ${hour24}, newTime: ${newTime}`);
+        this.setState({ 
+            selectedStartTime: newTime,
+            selectedStartTimePeriod: event.target.value
+        });
+    };
 
     onEndTimeHourChange = (event) => {
-        let hour24 = this.to24Hour(event.target.value, this.state.selectedEndTimePeriod)
-        this.setState({ selectedEndTime:  hour24 +  ":" + this.state.selectedEndTime.substring(3) });
-    }
+        const hour24 = this.to24Hour(event.target.value, this.state.selectedEndTimePeriod);
+        const newTime = hour24 + ":" + this.state.selectedEndTime.substring(3);
+        console.log(`[End Hour Change] New hour24: ${hour24}, newTime: ${newTime}`);
+        this.setState({ selectedEndTime: newTime });
+    };
 
     onEndTimeMinuteChange = (event) => {
-        this.setState({ selectedEndTime:  this.state.selectedEndTime.substring(0, 2) + ":" + event.target.value});
-    }
-    
+        const newTime = this.state.selectedEndTime.substring(0, 2) + ":" + event.target.value;
+        console.log(`[End Minute Change] New minute: ${event.target.value}, newTime: ${newTime}`);
+        this.setState({ selectedEndTime: newTime });
+    };
+
     onEndTimePeriodChange = (event) => {
-        let endTimeHour = this.state.selectedEndTime.substring(0,2)
-        let hour24 = this.to24Hour(endTimeHour, event.target.value)
-        this.setState({ selectedEndTime:  hour24 +  ":" + this.state.selectedEndTime.substring(3) });
-        this.setState({ selectedEndTimePeriod: event.target.value });
-    }
+        const endTimeHour = this.state.selectedEndTime.substring(0, 2);
+        const hour24 = this.to24Hour(endTimeHour, event.target.value);
+        const newTime = hour24 + ":" + this.state.selectedEndTime.substring(3);
+        console.log(`[End Period Change] New period: ${event.target.value}, hour24: ${hour24}, newTime: ${newTime}`);
+        this.setState({ 
+            selectedEndTime: newTime,
+            selectedEndTimePeriod: event.target.value
+        });
+    };
+
 
     render() {
 
