@@ -1,6 +1,13 @@
 const HOURS_12 = Array.from({ length: 13 }, (_, i) => i.toString().padStart(2, "0"));
 const MINUTES = Array.from({ length: 4 }, (_, i) => (i * 15).toString().padStart(2, "0"));
 const AM_PM = ["AM", "PM"]; 
+const DAYS  = {
+    "MON": "M",
+    "TUE": "T",
+    "WED": "W",
+    "THU": "R",
+    "FRI": "F"
+}
 
 class SearchPage extends React.Component {
 
@@ -20,6 +27,13 @@ class SearchPage extends React.Component {
             selectedStartTimePeriod: 'AM',
             selectedEndTime: '00:00',
             selectedEndTimePeriod: 'AM',
+            selectedDays: [
+                {name: "MON", checked: false},
+                {name: "TUE", checked: false},
+                {name: "WED", checked: false},
+                {name: "THU", checked: false},
+                {name: "FRI", checked: false}
+            ]
             
         }
     }
@@ -146,6 +160,18 @@ class SearchPage extends React.Component {
         });
     };
 
+    onDayChange = (event, name) => {
+        const isChecked = event.target.checked
+        this.setState((prevState) => ({
+            selectedDays: prevState.selectedDays.map((day) => {
+                if (day.name == name) {
+                    return {...day, checked: isChecked}
+                }
+                return day
+            })
+        }))
+    }
+
 
     render() {
 
@@ -240,6 +266,15 @@ class SearchPage extends React.Component {
                             AM_PM.map((period) => (<option value={period}>{period}</option>))
                         }
                     </select>
+                </div>
+                <div className="input_container">
+                        {
+                            this.state.selectedDays.map((day) => (
+                                <label htmlFor="">{day.name}
+                                    <input type="checkbox" checked={day.checked} onChange={(event) => this.onDayChange(event, day.name)} />
+                                </label>
+                            ))
+                        }
                 </div>
                 <div>
                     <button type="submit" >Search</button>
