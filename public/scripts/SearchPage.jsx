@@ -3,25 +3,108 @@ class SearchPage extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            term: null
+            subjects: null,
+            scheduleTypes: null,
+            courseLevels: null,
+            loading: true,
+            term: null,
+            selectedSubject: '',
+            selectedScheduleType: '',
+            selectedCourseLevel: '',
         }
     }
 
     componentDidMount() {
         const params = new URLSearchParams(window.location.search);
         const term = params.get("term");
-        this.setState({ term });
+        this.setState({term: term})
+        this.fetchAll()
+    }
+    
+
+    fetchAll = () => {
+        Promise.all([
+            fetch("/subjects").then((res) => res.json()),
+            fetch("/scheduleTypes").then((res) => res.json()),
+            fetch("/levels").then((res) => res.json()),
+        ])
+        .then(([subjectData, scheduleTypeData, courseLevelData]) => {
+            this.setState({
+                subjects: subjectData,
+                scheduleTypes: scheduleTypeData,
+                courseLevels: courseLevelData,
+                loading: false
+            });
+        })
+        .catch((err) => {
+             console.error(err);
+            this.setState({ loading: false });
+        })
     }
 
+    onSubjectChange = (event) => {
+        this.setState({ selectedSubject: event.target.value });
+    };
+
+    onScheduleTypeChange = (event) => {
+        this.setState({ selectedScheduleType: event.target.value });
+    };
+
+    onCourseLevelChange = (event) => {
+        this.setState({ selectedCourseLevel: event.target.value });
+    };
 
     render() {
 
-        const { term } = this.state;
+        const {
+            selectedSubject, subjects, loading,
+            selectedScheduleType, scheduleTypes, 
+            selectedCourseLevel, courseLevels
+        } = this.state
+
+        if (loading) {
+        return (
+            <select disabled>
+            <option>Loading Subjects...</option>
+            </select>
+        );
+        }
 
         return (
             <div>
-                <h1>Term selected {term}</h1>
+                <select value={selectedSubject} onChange={this.onSubjectChange}>
+                <option value="" disabled>
+                    Select a Subject
+                </option>
+                {subjects.map((subject) => (
+                    <option value={subject.id}>
+                    {subject.name}
+                    </option>
+                ))}
+                </select>
+                <select value={selectedScheduleType} onChange={this.onScheduleTypeChange}>
+                <option value="" disabled>
+                    Select a ScheduleType
+                </option>
+                {scheduleTypes.map((ScheduleType) => (
+                    <option value={ScheduleType.id}>
+                    {ScheduleType.description}
+                    </option>
+                ))}
+                </select>
+                <select value={selectedScheduleType} onChange={this.onCourseLevelChange}>
+                <option value="" disabled>
+                    Select a Course Level
+                </option>
+                {courseLevels.map((level) => (
+                    <option value={level.id}>
+                    {level.description}
+                    </option>
+                ))}
+                </select>
+                <button type="submit" >Search</button>
             </div>
+
         );
     }
 }
