@@ -18,6 +18,8 @@ class SearchPage extends React.Component {
             selectedCourseNumber: '',
             selectedStartTime: '00:00',
             selectedStartTimePeriod: 'AM',
+            selectedEndTime: '00:00',
+            selectedEndTimePeriod: 'AM',
             
         }
     }
@@ -99,12 +101,10 @@ class SearchPage extends React.Component {
     onStartTimeHourChange = (event) => {
         let hour24 = this.to24Hour(event.target.value, this.state.selectedStartTimePeriod)
         this.setState({ selectedStartTime:  hour24 +  ":" + this.state.selectedStartTime.substring(3) });
-        console.log(hour24 +  ":" + this.state.selectedStartTime.substring(3))
     }
 
     onStartTimeMinuteChange = (event) => {
         this.setState({ selectedStartTime:  this.state.selectedStartTime.substring(0, 2) + ":" + event.target.value});
-        console.log(this.state.selectedStartTime.substring(0, 2) + ":" + event.target.value)
     }
     
     onStartTimePeriodChange = (event) => {
@@ -112,7 +112,22 @@ class SearchPage extends React.Component {
         let hour24 = this.to24Hour(startTimeHour, event.target.value)
         this.setState({ selectedStartTime:  hour24 +  ":" + this.state.selectedStartTime.substring(3) });
         this.setState({ selectedStartTimePeriod: event.target.value });
-        console.log(hour24 +  ":" + this.state.selectedStartTime.substring(3))
+    }
+
+    onEndTimeHourChange = (event) => {
+        let hour24 = this.to24Hour(event.target.value, this.state.selectedEndTimePeriod)
+        this.setState({ selectedEndTime:  hour24 +  ":" + this.state.selectedEndTime.substring(3) });
+    }
+
+    onEndTimeMinuteChange = (event) => {
+        this.setState({ selectedEndTime:  this.state.selectedEndTime.substring(0, 2) + ":" + event.target.value});
+    }
+    
+    onEndTimePeriodChange = (event) => {
+        let endTimeHour = this.state.selectedEndTime.substring(0,2)
+        let hour24 = this.to24Hour(endTimeHour, event.target.value)
+        this.setState({ selectedEndTime:  hour24 +  ":" + this.state.selectedEndTime.substring(3) });
+        this.setState({ selectedEndTimePeriod: event.target.value });
     }
 
     render() {
@@ -184,6 +199,26 @@ class SearchPage extends React.Component {
                     </select>
                     <label htmlFor="start_time_AM/PM">AM/PM:</label>
                     <select name="start_time_AM/PM" id="start_time_AM/PM" onChange={this.onStartTimePeriodChange} >
+                        {
+                            AM_PM.map((period) => (<option value={period}>{period}</option>))
+                        }
+                    </select>
+                </div>
+                <div className="input_container">
+                    <label htmlFor="end_time_hour">End Time Hour:</label>
+                    <select name="end_time_hour" id="end_time_hour" onChange={this.onEndTimeHourChange}>
+                        {
+                            HOURS_12.map((hour) => (<option value={hour}>{hour}</option>))
+                        }
+                    </select>
+                    <label htmlFor="end_time_minute">Minute:</label>
+                    <select name="end_time_minute" id="end_time_minute" onChange={this.onEndTimeMinuteChange}>
+                        {
+                            MINUTES.map((minute) => (<option value={minute}>{minute}</option>))
+                        }
+                    </select>
+                    <label htmlFor="end_time_AM/PM">AM/PM:</label>
+                    <select name="end_time_AM/PM" id="end_time_AM/PM" onChange={this.onEndTimePeriodChange} >
                         {
                             AM_PM.map((period) => (<option value={period}>{period}</option>))
                         }
