@@ -11,6 +11,7 @@ class SearchPage extends React.Component {
             selectedSubject: '',
             selectedScheduleType: '',
             selectedCourseLevel: '',
+            selectedCourseNumber: ''
         }
     }
 
@@ -54,12 +55,17 @@ class SearchPage extends React.Component {
         this.setState({ selectedCourseLevel: event.target.value });
     };
 
+     onCourseNumberChange = (event) => {
+        this.setState({ selectedCourseLevel: event.target.value });
+    };
+
     render() {
 
         const {
             selectedSubject, subjects, loading,
             selectedScheduleType, scheduleTypes, 
-            selectedCourseLevel, courseLevels
+            selectedCourseLevel, courseLevels,
+            selectedCourseNumber
         } = this.state
 
         if (loading) {
@@ -82,6 +88,10 @@ class SearchPage extends React.Component {
                     </option>
                 ))}
                 </select>
+
+                <label htmlFor="courseNumber">Course Number: </label>
+                <input id="couresNumber" type="number" value={selectedCourseNumber} onChange={this.onCourseNumberChange} />
+
                 <select value={selectedScheduleType} onChange={this.onScheduleTypeChange}>
                 <option value="" disabled>
                     Select a ScheduleType
@@ -92,7 +102,8 @@ class SearchPage extends React.Component {
                     </option>
                 ))}
                 </select>
-                <select value={selectedScheduleType} onChange={this.onCourseLevelChange}>
+
+                <select value={selectedCourseLevel} onChange={this.onCourseLevelChange}>
                 <option value="" disabled>
                     Select a Course Level
                 </option>
@@ -102,6 +113,7 @@ class SearchPage extends React.Component {
                     </option>
                 ))}
                 </select>
+
                 <button type="submit" >Search</button>
             </div>
 
