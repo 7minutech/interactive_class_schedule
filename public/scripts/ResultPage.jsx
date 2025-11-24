@@ -26,8 +26,17 @@ class ResultPage extends React.Component {
     return (
       <div className="container">
         <h1>Sections Found</h1>
+        <div className="button_container">
+          <button onClick={() => window.location.href = `/`}>Home</button>
+          <button onClick={() => window.location.href = '/search'}>Back to Search</button>
+          <button onClick={() => window.location.href = `/registration?${params}`}>Schedule</button>
+        </div>
         {results.map((result) => <CourseCard result={result} />)}
-        <button onClick={() => window.location.href = '/search'}>Back to Search</button>
+        <div className="button_container">
+          <button onClick={() => window.location.href = `/`}>Home</button>
+          <button onClick={() => window.location.href = '/search'}>Back to Search</button>
+          <button onClick={() => window.location.href = `/registration?${params}`}>Schedule</button>
+        </div>
       </div>
     );
   }

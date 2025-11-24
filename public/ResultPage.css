@@ -83,6 +83,12 @@ button {
   margin-right: 10px;
 }
 
+.button_container {
+  display:  flex;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
 button:hover {
   background: #555;
 }
