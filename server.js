@@ -7,6 +7,7 @@ import levelRouter from "./routes/level.js"
 import scheduleTypeRouter from "./routes/scheduleType.js"
 import resultRouter from "./routes/result.js"
 import termRouter from "./routes/term.js"
+import registrationRouter from "./routes/register.js"
 
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -37,6 +38,8 @@ app.use('/levels', levelRouter);
 app.use('/scheduleTypes', scheduleTypeRouter)
 app.use('/results', resultRouter);
 app.use('/terms', termRouter);
+app.use('/registrations', registrationRouter);
+
 
 
 
