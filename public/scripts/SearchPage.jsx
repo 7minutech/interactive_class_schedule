@@ -325,7 +325,7 @@ class SearchPage extends React.Component {
                     <button type="submit" onClick={this.onSearch}>Search</button>
                 </div>
                 <div className="button_container">
-                    <button onClick={() => window.location.href = `/registration?${params}`}>Register</button>
+                    <button onClick={() => window.location.href = `/registration?${params}`}>Schedule</button>
                     <button onClick={() => window.location.href = `/`}>Home</button>
 
                 </div>

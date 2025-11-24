@@ -48,7 +48,7 @@ router.post('/', (req, resp) => {
 
             db.run("INSERT INTO registration (studentid, termid, crn) VALUES (?, ?, ?);", [studentId, termId, crn], (err) => {
                 if (err) return resp.status(500).json({ error: "database had error adding section" });
-                resp.status(200);
+                resp.status(200).json({});
             });
 
         })
