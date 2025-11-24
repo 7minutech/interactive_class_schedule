@@ -24,6 +24,10 @@ app.set('view engine', 'ejs');
 app.get('/search', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'search.html'));
 });
+app.get('/result', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'result.html'));
+});
+
 
 
 app.use('/sections', sectionRouter);

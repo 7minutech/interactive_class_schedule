@@ -201,7 +201,8 @@ class SearchPage extends React.Component {
             days: this.daysToString(this.state.selectedDays)
         }).toString();
 
-        window.location.href = `/results?${params}`;
+        window.location.href = `/result?${params}`;
+
     } 
 
 
