@@ -36,16 +36,25 @@ router.post('/', (req, resp) => {
         return
     } 
 
-    db.get("SELECT * FROM registration WHERE studentid = ? AND termId = ? AND crn = ?", [studentId, termId, crn], (err, row) => {
+    db.get("SELECT * FROM section WHERE crn = ?", [crn], (err, row) => {
+
         if (err) return resp.status(500).json({ error: "database had error checking section existence" });
-        if (row) return resp.status(200).json({});
+        if (!row) return resp.status(404).json({ error: "section was not found" });
 
-        db.run("INSERT INTO registration (studentid, termid, crn) VALUES (?, ?, ?);", [studentId, termId, crn], (err) => {
-            if (err) return resp.status(500).json({ error: "database had error adding section" });
-            resp.status(200);
-        });
+        db.get("SELECT * FROM registration WHERE studentid = ? AND termId = ? AND crn = ?", [studentId, termId, crn], (err, row) => {
 
+            if (err) return resp.status(500).json({ error: "database had error checking section existence" });
+            if (row) return resp.status(200).json({});
+
+            db.run("INSERT INTO registration (studentid, termid, crn) VALUES (?, ?, ?);", [studentId, termId, crn], (err) => {
+                if (err) return resp.status(500).json({ error: "database had error adding section" });
+                resp.status(200);
+            });
+
+        })
     })
+
+    
 
     
 });
@@ -58,10 +67,18 @@ router.delete('/', (req, resp) => {
         return
     } 
 
-    db.run("DELETE FROM registration WHERE studentid = ? AND termid = ? AND crn = ?;", [studentId, termId, crn], (err) => {
+    db.get("SELECT * FROM registration WHERE studentid = ? AND termId = ? AND crn = ?", [studentId, termId, crn], (err, row) => {
+
+        if (err) return resp.status(500).json({ error: "database had error checking section existence" });
+        if (!row) return resp.status(404).json({ error: "section was not found" });
+
+        db.run("DELETE FROM registration WHERE studentid = ? AND termid = ? AND crn = ?;", [studentId, termId, crn], (err) => {
         if (err) return resp.status(500).json({ error: "database had error droping section" });
         resp.status(200).json({});
     });
+
+    })
+
 });
 
 
