@@ -1,73 +1,96 @@
-class LandingPage extends React.Component {
-
-    constructor(props) {
-        super(props)
-        this.state = {
-            terms: [],
-            loading: true,
-            selectedTerm: '',
-        }
-    }
-
-    componentDidMount = () => {
-        this.fetchTerms()
-    }
-        
-    fetchTerms = () => {
-        fetch('/terms')
-        .then((res) => {
-            console.log('Response status:', res.status);
-            return res.json();
-        })
-        .then((data) => {
-            console.log('Fetched data:', data);
-            this.setState({ terms: data, loading: false });
-        })
-        .catch((err) => {
-            console.error('Fetch error:', err);
-            this.setState({ loading: false });
-        });
+class RegistrationPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      results: [],
+      loading: true,
+      error: null
     };
+  }
 
-    onChange = (event) => {
-        this.setState({ selectedTerm: event.target.value });
-    };
+  componentDidMount = () => {
+    const params = new URLSearchParams(window.location.search);
 
-    onSubmit = (event) => {
-    
-    const { selectedTerm } = this.state;
-    if (selectedTerm) {
-        window.location.href = `/search?term=${selectedTerm}`;
-    }
-};
+    console.log(`/registrations?${params}`)
 
+    fetch(`/registrations?${params}`)
+      .then(res => res.json())
+      .then(data => this.setState({ results: data, loading: false }))
+      .catch(err => this.setState({ error: err.message, loading: false }));
+  }
 
-    render() {
-        const { terms, loading, selectedTerm } = this.state;
+  render() {
+    const { results, loading, error } = this.state;
 
-        if (loading) {
-        return (
-            <select disabled>
-            <option>Loading...</option>
-            </select>
-        );
-        }
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
 
-        return (
-            <div>
-                <select value={selectedTerm} onChange={this.onChange}>
-                <option value="" disabled>
-                    Select a term
-                </option>
-                {terms.map((term) => (
-                    <option key={term.id} value={term.id}>
-                    {term.name}
-                    </option>
-                ))}
-                </select>
-                <button type="submit" onClick={this.onSubmit}>Go</button>
-            </div>
+    console.log(this.state.results)
 
-        );
-    }
+    return (
+      <div className="container">
+        <h1>Sections Found</h1>
+        {results.map((result) => <CourseCard result={result} />)}
+        <button onClick={() => window.location.href = '/search'}>Back to Search</button>
+      </div>
+    );
+  }
+}
+
+function CourseCard({ result }) {
+  const {
+    description,
+    crn,
+    num,
+    section,
+    termname,
+    level,
+    credits,
+    start,
+    end,
+    days,
+    location,
+    termstart,
+    termend,
+    scheduletype,
+    instructor
+  } = result;
+
+  return (
+    <div className="section_container">
+      <div className="section_heading">
+        <p>{description} - {crn} - {num} - {section}</p>
+      </div>
+      <div className="section_body">
+        <p>Associated Term: {termname}</p>
+        <p>Level: {level}</p>
+        <p>{credits}.000 Credits</p>
+      </div>
+      <div className="section_footer">
+        <h3 className="section_time_header">Scheduled Meeting Times</h3>
+        <table className="section_times">   
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Days</th>
+              <th>Where</th>
+              <th>Data Range</th>
+              <th>Schedule Type</th>
+              <th>Instructors</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{start} - {end}</td>
+              <td>{days}</td>
+              <td>{location}</td>
+              <td>{termstart} - {termend}</td>
+              <td>{scheduletype}</td>
+              <td>{instructor}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 }
