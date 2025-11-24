@@ -79,6 +79,10 @@ class RegisterPage extends React.Component {
 
     return (
       <div className="container"> 
+        <button onClick={() => window.location.href = `/registration?${params}`}>Schedule</button>
+        <button onClick={() => window.location.href = `/search?term=${params.get("termid")}`}>Back to Search</button>
+        <button onClick={() => window.location.href = `/registration/drop?${params}`}>Drop</button>
+        <button onClick={() => window.location.href = '/'}>Home</button>
         <h1>Register</h1>
         <div className="crn_container">
           <div className="crn_input_container">
@@ -91,10 +95,6 @@ class RegisterPage extends React.Component {
           </div>
         </div>
         {results.map((result) => <CourseCard result={result} />)}
-        <button onClick={() => window.location.href = `/registration?${params}`}>Schedule</button>
-        <button onClick={() => window.location.href = `/search?term=${params.get("termid")}`}>Back to Search</button>
-        <button onClick={() => window.location.href = `/registration/drop?${params}`}>Drop</button>
-        <button onClick={() => window.location.href = '/'}>Home</button>
       </div>
     );
   }
