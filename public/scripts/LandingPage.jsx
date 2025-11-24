@@ -71,6 +71,7 @@ class LandingPage extends React.Component {
 
         return (
             <div>
+                <h1>Interactive Class Schedule</h1>
                 <select value={selectedTerm} onChange={this.onChange} id="terms">
                 <option value="" disabled>
                     Select a term
