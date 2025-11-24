@@ -52,6 +52,28 @@ function CourseCard({ result }) {
     instructor
   } = result;
 
+  function convert24To12(time) {
+
+    let AM_PM = "AM";
+
+    const [hours, minutes] = time.split(':');
+
+    let parsedHours = parseInt(hours);
+    let parsedMinutes = minutes.substring(0,2)
+
+    if (parsedHours >= 12) {
+      AM_PM = "PM";
+      parsedHours %= 12;
+    }
+    
+    if (parsedHours == 0) {
+      parsedHours = 12;
+    }
+
+    return `${parsedHours}:${parsedMinutes} ${AM_PM}`
+
+  }
+
   return (
     <div className="section_container">
       <div className="section_heading">
@@ -77,7 +99,7 @@ function CourseCard({ result }) {
           </thead>
           <tbody>
             <tr>
-              <td>{start} - {end}</td>
+              <td>{convert24To12(start)} - {convert24To12(end)}</td>
               <td>{days}</td>
               <td>{location}</td>
               <td>{termstart} - {termend}</td>
