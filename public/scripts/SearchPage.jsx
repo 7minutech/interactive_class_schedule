@@ -33,7 +33,7 @@ class SearchPage extends React.Component {
                 {name: "WED", checked: false},
                 {name: "THU", checked: false},
                 {name: "FRI", checked: false}
-            ]
+            ],
             
         }
     }
@@ -75,6 +75,22 @@ class SearchPage extends React.Component {
         
     }
     
+    daysToString(days) {
+        let dayString = ""
+        let checkedDays = days.filter((day) => (day.checked))
+        checkedDays.forEach((day) => {
+            dayString += DAYS[day.name]
+        })
+        return dayString
+    } 
+
+    timeToString(time) {
+        let hour = time.substring(0,2)
+        if (hour == "00") {
+            return null
+        }
+        return time
+    }
 
     fetchAll = () => {
         Promise.all([
@@ -172,6 +188,53 @@ class SearchPage extends React.Component {
         }))
     }
 
+    onSearch = () => {
+
+
+
+        const {
+            term,
+            selectedSubject, 
+            selectedScheduleType, 
+            selectedCourseLevel, 
+            selectedCourseNumber,
+            selectedStartTime,
+            selectedEndTime,
+            selectedDays,
+        } = this.state
+
+
+        const searchParams = [
+            "termId=" + (term || ""),    
+            "subject=" + (selectedSubject || ""),    
+            "courseNumber=" + (selectedCourseNumber || ""),  
+            "scheduleType=" + (selectedScheduleType || ""),  
+            "courseLevel=" + (selectedCourseLevel || ""),   
+            "start=" + (this.timeToString(selectedStartTime) || ""),    
+            "end=" + (this.timeToString(selectedEndTime) || ""),     
+            "days=" + (selectedDays ? this.daysToString(selectedDays) : "")
+        ];
+
+
+        let params = searchParams.join("&")
+
+        console.log(params)
+
+        fetch('/results?' + params)
+        .then((res) => {
+            console.log('Response status:', res.status);
+            return res.json();
+        })
+        .then((data) => {
+            console.log('Fetched data:', data);
+        })
+        .catch((err) => {
+            console.error('Fetch error:', err);
+        });
+
+
+    } 
+
 
     render() {
 
@@ -195,6 +258,7 @@ class SearchPage extends React.Component {
                 <div className="input_container">
                     <label>Subject: </label>
                     <select value={selectedSubject} onChange={this.onSubjectChange} size={5}>
+                        <option value="" disabled>Select a subject</option>
                         {subjects.map((subject) => (
                             <option value={subject.id}>
                             {subject.name}
@@ -209,6 +273,7 @@ class SearchPage extends React.Component {
                 <div className="input_container">
                     <label>Schedule Type: </label>
                     <select value={selectedScheduleType} onChange={this.onScheduleTypeChange} size={5}>
+                        <option value="" disabled>Select a schedule type</option>
                         {scheduleTypes.map((ScheduleType) => (
                             <option value={ScheduleType.id}>
                             {ScheduleType.description}
@@ -219,6 +284,7 @@ class SearchPage extends React.Component {
                 <div className="input_container">
                     <label>Course Level: </label>
                     <select value={selectedCourseLevel} onChange={this.onCourseLevelChange} size={3}>
+                        <option value="" disabled>Select a course level</option>
                         {courseLevels.map((level) => (
                             <option value={level.id}>
                             {level.description}
@@ -277,7 +343,7 @@ class SearchPage extends React.Component {
                         }
                 </div>
                 <div>
-                    <button type="submit" >Search</button>
+                    <button type="submit" onClick={this.onSearch}>Search</button>
                 </div>
             </div>
 
