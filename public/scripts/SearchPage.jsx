@@ -87,7 +87,7 @@ class SearchPage extends React.Component {
     timeToString(time) {
         let hour = time.substring(0,2)
         if (hour == "00") {
-            return null
+            return ""
         }
         return time
     }
@@ -190,49 +190,18 @@ class SearchPage extends React.Component {
 
     onSearch = () => {
 
+        const params = new URLSearchParams({
+            termId: this.state.term,
+            subject: this.state.selectedSubject,
+            courseNumber: this.state.selectedCourseNumber,
+            scheduleType: this.state.selectedScheduleType,
+            courseLevel: this.state.selectedCourseLevel,
+            start: this.timeToString(this.state.selectedStartTime),
+            end: this.timeToString(this.state.selectedEndTime),
+            days: this.daysToString(this.state.selectedDays)
+        }).toString();
 
-
-        const {
-            term,
-            selectedSubject, 
-            selectedScheduleType, 
-            selectedCourseLevel, 
-            selectedCourseNumber,
-            selectedStartTime,
-            selectedEndTime,
-            selectedDays,
-        } = this.state
-
-
-        const searchParams = [
-            "termId=" + (term || ""),    
-            "subject=" + (selectedSubject || ""),    
-            "courseNumber=" + (selectedCourseNumber || ""),  
-            "scheduleType=" + (selectedScheduleType || ""),  
-            "courseLevel=" + (selectedCourseLevel || ""),   
-            "start=" + (this.timeToString(selectedStartTime) || ""),    
-            "end=" + (this.timeToString(selectedEndTime) || ""),     
-            "days=" + (selectedDays ? this.daysToString(selectedDays) : "")
-        ];
-
-
-        let params = searchParams.join("&")
-
-        console.log(params)
-
-        fetch('/results?' + params)
-        .then((res) => {
-            console.log('Response status:', res.status);
-            return res.json();
-        })
-        .then((data) => {
-            console.log('Fetched data:', data);
-        })
-        .catch((err) => {
-            console.error('Fetch error:', err);
-        });
-
-
+        window.location.href = `/results?${params}`;
     } 
 
 
