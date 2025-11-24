@@ -263,7 +263,7 @@ class SearchPage extends React.Component {
                     </select>
 
                 </div>
-                <div className="input_container">
+                <div className="input_container time_input">
                     <label htmlFor="start_time_hour">Start Time Hour:</label>
                     <select name="start_time_hour" id="start_time_hour" onChange={this.onStartTimeHourChange}>
                         {
@@ -283,7 +283,7 @@ class SearchPage extends React.Component {
                         }
                     </select>
                 </div>
-                <div className="input_container">
+                <div className="input_container time_input">
                     <label htmlFor="end_time_hour">End Time Hour:</label>
                     <select name="end_time_hour" id="end_time_hour" onChange={this.onEndTimeHourChange}>
                         {
@@ -303,7 +303,7 @@ class SearchPage extends React.Component {
                         }
                     </select>
                 </div>
-                <div className="input_container">
+                <div className="input_container days_input">
                         {
                             this.state.selectedDays.map((day) => (
                                 <label htmlFor="">{day.name}
