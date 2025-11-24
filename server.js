@@ -28,7 +28,9 @@ app.get('/search', (req, res) => {
 app.get('/result', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'result.html'));
 });
-
+app.get('/registration', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'registration.html'));
+});
 
 
 app.use('/sections', sectionRouter);

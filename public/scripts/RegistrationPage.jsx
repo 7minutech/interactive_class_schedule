@@ -33,30 +33,14 @@ class LandingPage extends React.Component {
         this.setState({ selectedTerm: event.target.value });
     };
 
-    onView = () => {
-        const { selectedTerm } = this.state;
-
-        if (!selectedTerm) {
-            alert("must select a term first");
-            return
-        }
-
-        const studentId = 1;
+    onSubmit = (event) => {
     
-
-        window.location.href = `/registration?termId=${selectedTerm}&studentId=${studentId}`;
-    };
-
-    onSearch = (event) => {
-        const { selectedTerm } = this.state;
-
-         if (!selectedTerm) {
-            alert("must select a term first");
-            return
-        }
-    
+    const { selectedTerm } = this.state;
+    if (selectedTerm) {
         window.location.href = `/search?term=${selectedTerm}`;
-    };
+    }
+};
+
 
     render() {
         const { terms, loading, selectedTerm } = this.state;
@@ -71,7 +55,7 @@ class LandingPage extends React.Component {
 
         return (
             <div>
-                <select value={selectedTerm} onChange={this.onChange} id="terms">
+                <select value={selectedTerm} onChange={this.onChange}>
                 <option value="" disabled>
                     Select a term
                 </option>
@@ -81,8 +65,7 @@ class LandingPage extends React.Component {
                     </option>
                 ))}
                 </select>
-                <button type="submit" onClick={this.onSearch} id="search_button">Serach</button>
-                <button type="submit" onClick={this.onView} id="view_schedule_button">View Schedule Page</button>
+                <button type="submit" onClick={this.onSubmit}>Go</button>
             </div>
 
         );
