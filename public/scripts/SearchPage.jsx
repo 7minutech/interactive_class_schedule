@@ -215,6 +215,15 @@ class SearchPage extends React.Component {
             selectedCourseNumber
         } = this.state
 
+        const studentId = 1;
+
+        const searachParams = new URLSearchParams(window.location.search);
+        const term = searachParams.get("term");
+
+        console.log(term)
+
+        let params = `termId=${term}&studentId=${studentId}`
+
         if (loading) {
         return (
             <select disabled>
@@ -314,6 +323,11 @@ class SearchPage extends React.Component {
                 </div>
                 <div>
                     <button type="submit" onClick={this.onSearch}>Search</button>
+                </div>
+                <div className="button_container">
+                    <button onClick={() => window.location.href = `/registration?${params}`}>Register</button>
+                    <button onClick={() => window.location.href = `/`}>Home</button>
+
                 </div>
             </div>
 

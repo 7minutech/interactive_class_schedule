@@ -82,7 +82,7 @@ class LandingPage extends React.Component {
                     </option>
                 ))}
                 </select>
-                <button type="submit" onClick={this.onSearch} id="search_button">Serach</button>
+                <button type="submit" onClick={this.onSearch} id="search_button">Search</button>
                 <button type="submit" onClick={this.onView} id="view_schedule_button">View Schedule Page</button>
             </div>
 

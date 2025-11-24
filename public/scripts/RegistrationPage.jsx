@@ -2,6 +2,7 @@ class RegistrationPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      term: null,
       results: [],
       loading: true,
       error: null
@@ -32,11 +33,12 @@ class RegistrationPage extends React.Component {
 
     return (
       <div className="container">
-        <h1>Sections Found</h1>
+        <h1>Schedule</h1>
         {results.map((result) => <CourseCard result={result} />)}
-        <button onClick={() => window.location.href = '/search'}>Back to Search</button>
+        <button onClick={() => window.location.href = `/search?term=${params.get("termId")}`}>Back to Search</button>
         <button onClick={() => window.location.href = `/registration/add?${params}`}>Register</button>
         <button onClick={() => window.location.href = `/registration/drop?${params}`}>Drop</button>
+        <button onClick={() => window.location.href = '/'}>Home</button>
       </div>
     );
   }

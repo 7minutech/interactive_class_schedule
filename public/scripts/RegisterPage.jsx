@@ -22,6 +22,8 @@ class RegisterPage extends React.Component {
   render() {
     const { results, loading, error } = this.state;
 
+    const params = new URLSearchParams(window.location.search);
+
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
 
@@ -29,9 +31,12 @@ class RegisterPage extends React.Component {
 
     return (
       <div className="container">
-        <h1>Sections Found</h1>
+        <h1>Register</h1>
         {results.map((result) => <CourseCard result={result} />)}
-        <button onClick={() => window.location.href = '/search'}>Back to Search</button>
+        <button onClick={() => window.location.href = `/registration?${params}`}>Schedule</button>
+        <button onClick={() => window.location.href = `/search?term=${params.get("termid")}`}>Back to Search</button>
+        <button onClick={() => window.location.href = `/registration/drop?${params}`}>Drop</button>
+        <button onClick={() => window.location.href = '/'}>Home</button>
       </div>
     );
   }
