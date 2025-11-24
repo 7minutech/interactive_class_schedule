@@ -32,6 +32,8 @@ class RegistrationPage extends React.Component {
         <h1>Sections Found</h1>
         {results.map((result) => <CourseCard result={result} />)}
         <button onClick={() => window.location.href = '/search'}>Back to Search</button>
+        <button onClick={() => window.location.href = '/registration/add'}>Register</button>
+        <button onClick={() => window.location.href = '/registration/drop'}>Drop</button>
       </div>
     );
   }

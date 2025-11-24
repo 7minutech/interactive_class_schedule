@@ -1,4 +1,4 @@
-class ResultPage extends React.Component {
+class RegisterPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -10,8 +10,10 @@ class ResultPage extends React.Component {
 
   componentDidMount = () => {
     const params = new URLSearchParams(window.location.search);
-    
-    fetch(`/results?${params}`)
+
+    console.log(`/registrations?${params}`)
+
+    fetch(`/registrations?${params}`)
       .then(res => res.json())
       .then(data => this.setState({ results: data, loading: false }))
       .catch(err => this.setState({ error: err.message, loading: false }));
@@ -23,13 +25,13 @@ class ResultPage extends React.Component {
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
 
+    console.log(this.state.results)
+
     return (
       <div className="container">
         <h1>Sections Found</h1>
         {results.map((result) => <CourseCard result={result} />)}
         <button onClick={() => window.location.href = '/search'}>Back to Search</button>
-        <button onClick={() => window.location.href = '/registrations/add'}>Register</button>
-        <button onClick={() => window.location.href = '/registrations/drop'}>Drop</button>
       </div>
     );
   }
