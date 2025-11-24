@@ -28,9 +28,20 @@ app.get('/search', (req, res) => {
 app.get('/result', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'result.html'));
 });
-app.get('/registration', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'registration.html'));
+
+app.get('/registration/:action?', (req, res) => {
+  const action = req.params.action;
+  let file = "registration.html"
+  if (action == "drop") {
+    file = "drop.html"
+  }  
+  if (action == "add") {
+    file = "add.html"
+  } 
+
+  res.sendFile(path.join(__dirname, 'public', file));
 });
+
 
 
 app.use('/sections', sectionRouter);
