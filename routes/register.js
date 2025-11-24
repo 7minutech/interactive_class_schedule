@@ -10,18 +10,17 @@ router.get('/', (req, resp) => {
         return
     } 
 
-    let sql = `SELECT course.description AS course_desc, sec.crn, sec.subjectid, sec.section,
-                term.*, level.description AS level_desc, sec.num, course.credits, 
-                sec.start, sec.end, sec.days, sec.location, scheduletype.description AS type_desc, 
-                sec.instructor 
+    let sql = `SELECT course.*, section.*,term.name AS termname, term.start AS termstart,
+                term.end AS termend,scheduletype.description AS scheduletype, level.description AS level
                 FROM registration
-                JOIN section AS sec ON sec.crn = registration.crn
-                JOIN scheduletype ON sec.scheduletypeid = scheduletype.id
-                JOIN course ON sec.num = course.num
+                JOIN section ON section.crn = registration.crn
+                JOIN scheduletype ON section.scheduletypeid = scheduletype.id
+                JOIN course ON section.num = course.num AND section.subjectid = course.subjectid
                 JOIN level on course.levelid = level.id
-                JOIN subject on subject.id = course.subjectid
-                JOIN term on sec.termid = term.id
-                WHERE registration.studentid = ? AND registration.termid = ?`
+                JOIN term on section.termid = term.id
+                WHERE registration.studentid = ? AND registration.termid = ?
+                ORDER BY course.num, section;
+                `
     db.all(sql, [studentId, termId], (err, rows) => {
         if (err) return resp.status(500).json({ error: "database had error finding level" });
         if (!rows) return resp.status(404).json({ error: "registrations not found" });
