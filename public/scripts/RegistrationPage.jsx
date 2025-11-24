@@ -13,6 +13,7 @@ class RegistrationPage extends React.Component {
 
     console.log(`/registrations?${params}`)
 
+
     fetch(`/registrations?${params}`)
       .then(res => res.json())
       .then(data => this.setState({ results: data, loading: false }))
@@ -21,6 +22,8 @@ class RegistrationPage extends React.Component {
 
   render() {
     const { results, loading, error } = this.state;
+
+    const params = new URLSearchParams(window.location.search);
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
@@ -32,8 +35,8 @@ class RegistrationPage extends React.Component {
         <h1>Sections Found</h1>
         {results.map((result) => <CourseCard result={result} />)}
         <button onClick={() => window.location.href = '/search'}>Back to Search</button>
-        <button onClick={() => window.location.href = '/registration/add'}>Register</button>
-        <button onClick={() => window.location.href = '/registration/drop'}>Drop</button>
+        <button onClick={() => window.location.href = `/registration/add?${params}`}>Register</button>
+        <button onClick={() => window.location.href = `/registration/drop?${params}`}>Drop</button>
       </div>
     );
   }
