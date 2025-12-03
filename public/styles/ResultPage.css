@@ -78,9 +78,7 @@ button {
   border: none;
   border-radius: 3px;
   cursor: pointer;
-  margin-top: 15px;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin: 10px;
 }
 
 .button_container {
