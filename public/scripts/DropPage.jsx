@@ -43,9 +43,7 @@ class DropPage extends React.Component {
       termId: searchParams.get("termId"),
       crn: this.state.crn
     };
-    
-    console.log("1. Sending data:", data);
-    
+        
     fetch('/registrations', {
       method: 'DELETE',
       headers: {
@@ -57,7 +55,7 @@ class DropPage extends React.Component {
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       return res.json();
     })
-    .then(result => {
+    .then(() => {
       this.refreshRegistrations();
     })
     .catch(err => {
@@ -80,7 +78,7 @@ class DropPage extends React.Component {
     return (
       <div className="container"> 
         <button onClick={() => window.location.href = `/registration?${params}`}>Schedule</button>
-        <button onClick={() => window.location.href = `/search?term=${params.get("termid")}`}>Back to Search</button>
+        <button onClick={() => window.location.href = `/search?term=${params.get("termId")}`}>Back to Search</button>
         <button onClick={() => window.location.href = `/registration/add?${params}`}>Register</button>
         <button onClick={() => window.location.href = '/'}>Home</button>
         <h1>Drop</h1>
